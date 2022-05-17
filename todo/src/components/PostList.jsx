@@ -3,7 +3,7 @@ import ListItem from "./ListItem";
 import '../styles/PostList.css'
 
 const PostList = ({posts, setPosts}) => {
-
+    console.log(posts)
     return(
         <ul className="post__list">
             {posts.map(post=>

@@ -29,7 +29,7 @@ const WrapperToDo = () => {
             <Header/>
             <AddTask posts={posts} setPosts={setPosts}/>
             <FilterTasks posts={filterList} setFilter={setFilter}/>
-            <Tasks posts={posts} setPosts={setPosts}/>
+            <Tasks posts={filter} setPosts={setFilter}/>
         </div>
     )
 }

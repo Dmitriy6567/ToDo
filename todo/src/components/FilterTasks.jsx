@@ -3,7 +3,7 @@ import '../styles/FilterTasks.css'
 import Button from "./Button";
 import Select from "./Select";
 
-const FilterTasks = ({posts,setFilter}) => {
+const FilterTasks = ({setFilter}) => {
 
     return(
         <div className="filter__tasks">
