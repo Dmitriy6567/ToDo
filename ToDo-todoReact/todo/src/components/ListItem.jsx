@@ -43,10 +43,16 @@ const ListItem = ({post,setPosts}) => {
         }
     }
 
+    const saveTaskonBlur = () =>{
+        setEditing(true)
+    }
+
     return(
         <li className="task">
             <Input type={'checkbox'} defaultChecked={isCheck} callback={toggleCheck}/>
-            { editing ? <span className="todo" onClick={editingTask} >{post.body}</span> : <input autoFocus onChange={(e)=>setInpEditing(e.target.value)} onKeyDown={saveTask} defaultValue={inpEditing}/>}
+            { editing ? <span className="todo" onClick={editingTask} >{post.body}</span> 
+            : <input autoFocus onBlur={saveTaskonBlur} onChange={(e)=>setInpEditing(e.target.value)} onKeyDown={saveTask} defaultValue={inpEditing}
+            style={{width:'25%'}}/>}
             <span className="date">{post.date}</span>
             <Button body={"Delete"} callback={deletePosts}/>
         </li>

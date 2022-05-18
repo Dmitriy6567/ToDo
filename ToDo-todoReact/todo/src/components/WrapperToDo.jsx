@@ -3,6 +3,7 @@ import AddTask from "../components/AddTask";
 import FilterTasks from "../components/FilterTasks";
 import Header from "../components/Header";
 import Tasks from "../components/Tasks";
+import Pagination from "./Pagination";
 
 const WrapperToDo = () => {
 
@@ -11,6 +12,10 @@ const WrapperToDo = () => {
     const [filter, setFilter] = useState("all")
 
     const [sorted, setSorted] = useState('Sort by date')
+
+    const [countTasks, setCountTasks] = useState(0)
+
+    console.log(countTasks)
 
     const filterList = useMemo(()=>{
 
@@ -24,13 +29,16 @@ const WrapperToDo = () => {
         }
       
   },[posts,filter])
+
   const reverseAndFilterPosts = sorted==='new'? [...filterList].reverse() : filterList
+
     return(
         <div>
             <Header/>
             <AddTask posts={posts} setPosts={setPosts}/>
             <FilterTasks filter={filter} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
             <Tasks posts={reverseAndFilterPosts} setPosts={setPosts}/>
+            <Pagination count={countTasks}/>
         </div>
     )
 }

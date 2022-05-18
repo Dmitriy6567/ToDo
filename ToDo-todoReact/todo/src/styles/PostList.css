@@ -8,14 +8,32 @@ hr {
     margin-right: 7%;
  }
 
- @media screen and (min-width:200px) and (max-width:580px){
+ h2 {
+    text-align: center;
+}
+
+ @media screen and (min-width:200px) and (max-width:650px){
     hr {
         width: 80%;
         margin-right: 7%;
      }
 
      .post__list {
-        margin-right: 15%;
-        width: 80%;
+        margin-left: -15%;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:350px) and (max-width:450px){
+    h2 {
+        text-align: center;
+        margin-right: 10%;
+    }
+}
+
+@media screen and (min-width:250px) and (max-width:350px){
+    h2 {
+        text-align: center;
+        margin-right: 25%;
     }
 }
