@@ -8,7 +8,7 @@ const PostList = ({posts, setPosts}) => {
         <ul className="post__list">
             {posts.length?  
             posts.map(post=>
-                <ListItem key={post.id} posts={posts} post={post} setPosts={setPosts}/>
+                <ListItem key={post.id} post={post} setPosts={setPosts}/>
                 ) 
             : <h1 style={{textAlign: 'center'}}>Нет записей!</h1>}
         </ul>

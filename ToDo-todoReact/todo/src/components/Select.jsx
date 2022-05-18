@@ -1,7 +1,7 @@
 import React from "react";
 import '../styles/Select.css'
 
-const Select = ({defVal, value, callback}) => {
+const Select = ({defVal, callback}) => {
     
     return(
         <select className="sort" 

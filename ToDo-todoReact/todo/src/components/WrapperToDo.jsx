@@ -6,10 +6,7 @@ import Tasks from "../components/Tasks";
 
 const WrapperToDo = () => {
 
-    const [posts, setPosts] = useState([
-      {id:1,body:'Дело 1' ,date:'03/07/22', isCheck: false},
-      {id:2,body:'Дело 2' ,date:'08/07/22', isCheck: false}
-    ])
+    const [posts, setPosts] = useState([])
 
     const [filter, setFilter] = useState("all")
 
