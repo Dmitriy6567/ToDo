@@ -13,6 +13,8 @@ const WrapperToDo = () => {
 
     const [sorted, setSorted] = useState('Sort by date')
 
+    const [page, setPage] = useState(1)
+
     const filterList = useMemo(()=>{
 
         switch(filter){
@@ -34,7 +36,7 @@ const WrapperToDo = () => {
             <AddTask posts={posts} setPosts={setPosts}/>
             <FilterTasks filter={filter} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
             <Tasks posts={reverseAndFilterPosts} setPosts={setPosts}/>
-            <Pagination amountTask={filterList.length} />
+            <Pagination amountTask={filterList.length} page={page} setPage={setPage} />
         </div>
     )
 }
