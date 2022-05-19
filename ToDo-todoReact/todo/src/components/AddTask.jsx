@@ -4,7 +4,7 @@ import Button from "./Button";
 import Input from "./Input";
 
 const AddTask = ({posts,setPosts}) => {
-    
+
     const [task,setTask] = useState('');
 
     const data = new Date();

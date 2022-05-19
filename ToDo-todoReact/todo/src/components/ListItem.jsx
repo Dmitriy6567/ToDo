@@ -56,6 +56,7 @@ const ListItem = ({post,setPosts}) => {
             <span className="date">{post.date}</span>
             <Button body={"Delete"} callback={deletePosts}/>
         </li>
+        
     )
 }
 

@@ -13,10 +13,6 @@ const WrapperToDo = () => {
 
     const [sorted, setSorted] = useState('Sort by date')
 
-    const [countTasks, setCountTasks] = useState(0)
-
-    console.log(countTasks)
-
     const filterList = useMemo(()=>{
 
         switch(filter){
@@ -31,14 +27,14 @@ const WrapperToDo = () => {
   },[posts,filter])
 
   const reverseAndFilterPosts = sorted==='new'? [...filterList].reverse() : filterList
-
+  
     return(
         <div>
             <Header/>
             <AddTask posts={posts} setPosts={setPosts}/>
             <FilterTasks filter={filter} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
             <Tasks posts={reverseAndFilterPosts} setPosts={setPosts}/>
-            <Pagination count={countTasks}/>
+            <Pagination amountTask={filterList.length} />
         </div>
     )
 }
