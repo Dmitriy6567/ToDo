@@ -1,9 +1,9 @@
 import React from "react";
 
-const ButtonPagintion = ({number, callback}) => {
-    console.log(number,callback)
+const ButtonPagintion = ({number, item, page, setPage}) => {
+    
     return(
-        <li onClick={callback} className={callback===number ? 'active' : ''} >{number}</li>
+        <li onClick={()=>setPage(item+1)} className={item===page ? 'active' : ''} >{number}</li>
     )
 }
 

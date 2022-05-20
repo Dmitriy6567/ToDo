@@ -2,22 +2,19 @@ import React from "react";
 import '../styles/Pagination.css'
 import ButtonPagintion from "./ButtonPagination";
 
-const Pagination = ({amountTask, setPage}) => {
+const Pagination = ({amountTask, page ,setPage}) => {
     
     const countPage = Math.ceil(amountTask/5)
 
-    function editingPage (index) {
-        return setPage(index)
-    }
-
+ 
     return(
         <div className="pagination">
             <ul>
-                <li href="#">&laquo;</li>
-                { [...Array(countPage).keys()].map(( page,index) => {
-                    return <ButtonPagintion callback={()=>editingPage(index+1)} key={index+1} number={index+1}/>
+                <li onClick={()=>page>1 && setPage(page-1)}>&laquo;</li>
+                { [...Array(countPage).keys()].map( item => {
+                    return <ButtonPagintion key={item+1} item={item} page={page-1} setPage={setPage} number={item+1}/>
                 })}
-                <li>&raquo;</li>
+                <li onClick={()=>page<countPage && setPage(page+1)}>&raquo;</li>
             </ul>
         </div>
     )

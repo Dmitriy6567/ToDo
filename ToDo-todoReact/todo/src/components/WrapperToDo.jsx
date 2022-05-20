@@ -35,7 +35,7 @@ const WrapperToDo = () => {
             <Header/>
             <AddTask posts={posts} setPosts={setPosts}/>
             <FilterTasks filter={filter} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
-            <Tasks posts={reverseAndFilterPosts} setPosts={setPosts}/>
+            <Tasks posts={reverseAndFilterPosts} setPosts={setPosts} page={page}/>
             <Pagination amountTask={filterList.length} page={page} setPage={setPage} />
         </div>
     )
