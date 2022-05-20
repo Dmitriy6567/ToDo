@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{ useEffect} from "react";
 import '../styles/Pagination.css'
 import ButtonPagintion from "./ButtonPagination";
 
@@ -10,7 +10,7 @@ const Pagination = ({amountTask, page ,setPage}) => {
     console.log(countPage,page,amountTask) // количество кнопок, номер кнопки, количество задач
 
     useEffect (()=>{
-        countPage<page-1 ? setPage(page-1) : setPage(page) 
+        page>=amountTask/5 && countPage>0 && setPage(countPage)
     },[amountTask])
 
     return(
