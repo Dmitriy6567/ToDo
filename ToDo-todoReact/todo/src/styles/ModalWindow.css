@@ -1,0 +1,30 @@
+.modal-window {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 20%;
+}
+
+.modal-content {
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    min-width: 250px;
+    padding-left: 4%;
+}
+
+.modal-window.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    display: block;
+    margin-bottom: 3%;
+    margin-left: 2%;
+    height: 80px;
+    resize: none;
+}
