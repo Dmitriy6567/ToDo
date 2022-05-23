@@ -57,21 +57,24 @@ const ListItem = ({post,setPosts}) => {
 
     const [modal, setModal] = useState(false)
 
+    const [modalValue, setModalValue] = useState (post.body)
+
     const modalWindow = (e) => {
         e.stopPropagation();
+        setModalValue(post.body)
         setModal(true)
     }
     
     return(
         <li className="task">
-            <ModalWindow task={post.body} visible={modal} setVisible={setModal} post={post} setPosts={setPosts} />
-            <Input type={'checkbox'} defaultChecked={isCheck} callback={toggleCheck}/>
+            <ModalWindow modalValue={modalValue} setModalValue={setModalValue} visible={modal} setVisible={setModal} post={post} setPosts={setPosts} />
+            <Input type={'checkbox'} classStyle={'flag'} defaultChecked={isCheck} callback={toggleCheck}/>
             {editing ? <span className="todo" onClick={editingTask}>
                 {post.body.length<10 ?
                 post.body:
                 <>
                 {post.body.substring(0,20)}
-                <Button body={'...'} callback={modalWindow}/>
+                <Button body={'...'} callback={modalWindow} style={{width:'10%'}} />
                 </>
                 }
             </span>

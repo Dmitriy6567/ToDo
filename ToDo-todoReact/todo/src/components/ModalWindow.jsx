@@ -2,13 +2,9 @@ import React, {useState} from "react";
 import Button from "./Button";
 import '../styles/ModalWindow.css'
 
-const ModalWindow = ({task, visible, setVisible, post, setPosts}) => {
-
-    console.log(task) // текст задачи
+const ModalWindow = ({modalValue, setModalValue, visible, setVisible, post, setPosts}) => {
 
     const rootClasses = ['modal-window']
-
-    const [modalValue, setModalValue] = useState (task)
 
     visible && rootClasses.push('active')
 

@@ -1,22 +1,16 @@
 .post__list {
     color: white;
     list-style-type: none;
+    height: 300px;
 }
-
-hr {
-    width: 90%;
-    margin-right: 7%;
- }
 
  h2 {
     text-align: center;
 }
 
+
+
  @media screen and (min-width:200px) and (max-width:650px){
-    hr {
-        width: 80%;
-        margin-right: 7%;
-     }
 
      .post__list {
         margin-left: -15%;
