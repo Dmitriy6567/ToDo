@@ -1,9 +1,10 @@
-import React,{useState, useMemo} from "react";
+import React,{useState, useMemo, useEffect} from "react";
 import AddTask from "../components/AddTask";
 import FilterTasks from "../components/FilterTasks";
 import Header from "../components/Header";
 import Tasks from "../components/Tasks";
 import Pagination from "./Pagination";
+import {http} from "../api/http";
 
 const WrapperToDo = () => {
 
@@ -14,6 +15,23 @@ const WrapperToDo = () => {
     const [sorted, setSorted] = useState('Sort by date')
 
     const [page, setPage] = useState(1)
+
+    const getTasks = async () =>{
+        try{
+            const response = await http.get('/tasks/1?order=asc&pp=5&page=1')
+            const arr = response.data.tasks
+            console.log('Массив',arr);
+            // setPosts(arr)
+            console.log(posts)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    
+    useEffect (()=>{
+        getTasks()
+    },[posts])
 
     const filterList = useMemo(()=>{
 
