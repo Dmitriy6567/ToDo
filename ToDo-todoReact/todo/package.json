@@ -1,3 +1,4 @@
+
 {
   "name": "todo",
   "version": "0.1.0",
@@ -9,7 +10,8 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "homepage": "https://github.com/Dmitriy6567/ToDo/tree/todoReact"
   },
   "scripts": {
     "start": "react-scripts start",
