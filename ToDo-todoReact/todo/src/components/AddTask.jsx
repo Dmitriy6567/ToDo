@@ -12,10 +12,10 @@ const AddTask = ({posts,setPosts}) => {
     const  addNewPost = () => {
 
         const newPost = {
-            id: Date.now(),
-            body:task,
+            uuid: Date.now(),
+            name:task,
             date: data.getDate() + '/'+ (data.getMonth()<10 ? '0' + data.getMonth() : data.getMonth()) + '/' + data.getFullYear(),
-            isCheck: false
+            done: false
         }
 
         if(task.trim()){
@@ -30,11 +30,11 @@ const AddTask = ({posts,setPosts}) => {
     }
 
     const clearDone = () =>{
-        setPosts(posts.filter(post => post.isCheck===false))
+        setPosts(posts.filter(post => post.done===false))
     }
 
     const clearUndone = () => {
-        setPosts(posts.filter(post => post.isCheck===true))
+        setPosts(posts.filter(post => post.done===true))
     }
 
     const getValue = (e) =>{

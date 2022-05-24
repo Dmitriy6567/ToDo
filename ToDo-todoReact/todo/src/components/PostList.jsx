@@ -11,7 +11,7 @@ const PostList = ({posts, setPosts, page}) => {
             {posts.length?  
             posts.map((post,index)=>
                 (index>=(page-1)*limit && index<page*limit) &&
-                <ListItem key={post.id} post={post} setPosts={setPosts}/>
+                <ListItem key={post.uuid} post={post} setPosts={setPosts}/>
                 
         ) 
             : <h2>Нет записей!</h2>}

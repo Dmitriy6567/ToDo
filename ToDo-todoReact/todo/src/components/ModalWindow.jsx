@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Button from "./Button";
 import '../styles/ModalWindow.css'
 
@@ -11,8 +11,8 @@ const ModalWindow = ({modalValue, setModalValue, visible, setVisible, post, setP
     const saveTask = () => {
         setPosts(prev =>
             prev.map(el =>
-                el.id === post.id ?
-                {...el,body: modalValue}:
+                el.uuid === post.uuid ?
+                {...el,name: modalValue}:
                 el))
         setVisible(false)
     }

@@ -21,17 +21,12 @@ const WrapperToDo = () => {
             const response = await http.get('/tasks/1?order=asc&pp=5&page=1')
             const arr = response.data.tasks
             console.log('Массив',arr);
-            // setPosts(arr)
-            console.log(posts)
+            setPosts(arr)
         }
         catch(err){
             console.log(err)
         }
     }
-    
-    useEffect (()=>{
-        getTasks()
-    },[posts])
 
     const filterList = useMemo(()=>{
 
@@ -47,6 +42,10 @@ const WrapperToDo = () => {
   },[posts,filter])
 
   const reverseAndFilterPosts = sorted==='new'? [...filterList].reverse() : filterList
+
+  useEffect (()=>{
+    getTasks()
+},[filter])
   
     return(
         <div>
