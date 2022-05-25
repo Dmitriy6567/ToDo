@@ -2,7 +2,7 @@ import React from "react";
 import ListItem from "./ListItem";
 import '../styles/PostList.css'
 
-const PostList = ({posts, setPosts, page, patchChangeTask,patchCheckTask, deleteTasks}) => {
+const PostList = ({posts, setPosts, page, patchChangeTask,patchCheckTask, deleteTasks,getTasks}) => {
 
     const limit=5
 
@@ -11,8 +11,8 @@ const PostList = ({posts, setPosts, page, patchChangeTask,patchCheckTask, delete
             {posts.length?  
             posts.map((post,index)=>
                 (index>=(page-1)*limit && index<page*limit) &&
-                <ListItem key={post.uuid} posts={posts} post={post} setPosts={setPosts} patchChangeTask={patchChangeTask} patchCheckTask={patchCheckTask} 
-                deleteTasks={deleteTasks}/>
+                <ListItem posts={posts} post={post} setPosts={setPosts} patchChangeTask={patchChangeTask} patchCheckTask={patchCheckTask} 
+                deleteTasks={deleteTasks} getTasks={getTasks}/>
                 
         ) 
             : <h2>Нет записей!</h2>}

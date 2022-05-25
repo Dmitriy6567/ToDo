@@ -4,7 +4,7 @@ import Input from "./Input";
 import '../styles/PostItem.css'
 import ModalWindow from "./ModalWindow";
 
-const ListItem = ({post,setPosts, patchChangeTask, patchCheckTask, deleteTasks, posts}) => {
+const ListItem = ({post,setPosts, patchChangeTask, patchCheckTask, deleteTasks, posts, getTasks}) => {
 
     const [done, setCheckbox] = useState(post.done)
 
@@ -14,6 +14,7 @@ const ListItem = ({post,setPosts, patchChangeTask, patchCheckTask, deleteTasks, 
             :el))
         setCheckbox(e.target.value)
         patchCheckTask(e,uuid)
+        // getTasks()
     }
     
     const deletePosts = () =>{
@@ -76,17 +77,16 @@ const ListItem = ({post,setPosts, patchChangeTask, patchCheckTask, deleteTasks, 
             <ModalWindow modalValue={modalValue} posts={posts} setModalValue={setModalValue} visible={modal} setVisible={setModal} post={post} setPosts={setPosts} patchChangeTask={patchChangeTask}/>
             <Input type={'checkbox'} classStyle={'flag'} defaultChecked={done} callback={(e)=>toggleCheck(e,post.uuid)}/>
             {editing ? <span className="todo" onClick={editingTask}>
-                {post.name.length<10 ?
+                {post.name.length<20 ?
                 post.name:
                 <>
-                {post.name.substring(0,10)}
+                {post.name.substring(0,20)}
                 <Button body={'...'} callback={modalWindow} style={{width:'10%'}} />
                 </>
                 }
             </span>
             : <input autoFocus onBlur={(e)=> saveTaskonBlur(e,inpEditing,post.uuid)} onChange={(e)=>setInpEditing(e.target.value)} onKeyDown={(e) => saveTask(e,inpEditing, post.uuid)} defaultValue={post.name}
             style={{width:'25%'}}/>}
-            <span className="date">{post.date}</span>
             <Button body={"Delete"} callback={deletePosts}/>
         </li>
         

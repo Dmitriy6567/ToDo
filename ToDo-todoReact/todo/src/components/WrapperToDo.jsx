@@ -61,7 +61,7 @@ const WrapperToDo = () => {
             const response = await http.get('/tasks/1?order=asc&pp=5&page=1')
             const arr = response.data.tasks
             console.log('Массив',arr);
-            setPosts(arr)
+            setPosts(prev=>prev= arr)
         }
         catch(err){
             console.log(err)
@@ -72,10 +72,8 @@ const WrapperToDo = () => {
 
         switch(filter){
             case 'checked':
-                getTasks()
                return posts.filter(post => post.done===true)
             case 'unchecked':
-                getTasks()
                 return posts.filter(post => post.done===false)
             default:
                 return posts
@@ -88,14 +86,15 @@ const WrapperToDo = () => {
   useEffect (()=>{
     getTasks()
 },[filter])
+
 console.log(posts)
     return(
         <div>
             <Header/>
-            <AddTask posts={posts} setPosts={setPosts} postTasks={postTasks}/>
+            <AddTask posts={posts} setPosts={setPosts} postTasks={postTasks} getTasks={getTasks}/>
             <FilterTasks filter={filter} setPage={setPage} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
             <Tasks posts={reverseAndFilterPosts} setPosts={setPosts} page={page} 
-            patchCheckTask={patchCheckTask} patchChangeTask={patchChangeTask} deleteTasks={deleteTasks}/>
+            patchCheckTask={patchCheckTask} patchChangeTask={patchChangeTask} deleteTasks={deleteTasks} getTasks={getTasks} />
             <Pagination amountTask={filterList.length} page={page} setPage={setPage} />
         </div>
     )

@@ -10,7 +10,7 @@ const FilterTasks = ({filter,setFilter,setSorted,setPage}) => {
             <Button body={"All"} locked={filter==='all'} callback={()=>{setFilter('all');setPage(1)}}/>
             <Button body={"Done"} locked={filter==='checked'} callback={()=>{setFilter('checked');setPage(1)}}/>
             <Button body={"Undone"} locked={filter==='unchecked'} callback={()=>{setFilter('unchecked');setPage(1)}} />
-            <Select defVal={'Sorted by Date'} callback={e=>setSorted(e.target.value)}/>
+            <Select defVal={'Sorted by '} callback={e=>setSorted(e.target.value)}/>
         </div>
     )
 }

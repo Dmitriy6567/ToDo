@@ -1,29 +1,28 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import '../styles/AddTask.css'
 import Button from "./Button";
 import Input from "./Input";
 
-const AddTask = ({posts,setPosts, postTasks}) => {
+const AddTask = ({posts,setPosts, postTasks,getTasks}) => {
 
     const [task,setTask] = useState('');
-
-    const data = new Date();
 
     const  addNewPost = () => {
 
         const newPost = {
             name:task,
-            date: data.getDate() + '/'+ (data.getMonth()<10 ? '0' + data.getMonth() : data.getMonth()) + '/' + data.getFullYear(),
             done: false
         }
 
         if(task.trim()){
             postTasks(newPost)
-            setPosts([...posts,newPost])
+            getTasks()
+            // setPosts([...posts,newPost])
         }
-
         setTask('')
+        getTasks()
     }
+
 
     const clearAll = () =>{
         setPosts([])
