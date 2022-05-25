@@ -3,7 +3,7 @@ import '../styles/AddTask.css'
 import Button from "./Button";
 import Input from "./Input";
 
-const AddTask = ({posts,setPosts}) => {
+const AddTask = ({posts,setPosts, postTasks}) => {
 
     const [task,setTask] = useState('');
 
@@ -12,13 +12,13 @@ const AddTask = ({posts,setPosts}) => {
     const  addNewPost = () => {
 
         const newPost = {
-            uuid: Date.now(),
             name:task,
             date: data.getDate() + '/'+ (data.getMonth()<10 ? '0' + data.getMonth() : data.getMonth()) + '/' + data.getFullYear(),
             done: false
         }
 
         if(task.trim()){
+            postTasks(newPost)
             setPosts([...posts,newPost])
         }
 

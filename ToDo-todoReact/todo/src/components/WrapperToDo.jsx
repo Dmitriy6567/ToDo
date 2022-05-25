@@ -16,6 +16,46 @@ const WrapperToDo = () => {
 
     const [page, setPage] = useState(1)
 
+    const postTasks = async (obj) => {
+        try {
+        const resp = await http.post('task/1',  obj );
+        console.log(resp);
+        } catch (err) {
+            console.error(err, 1);
+            }
+        };
+
+    const patchChangeTask = async (newValue, uuid) =>  {
+        
+        try {
+            const resp = await http.patch(`/task/1/${uuid}`, {name: newValue})
+            console.log(resp)
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
+    const patchCheckTask = async (e, uuid) => {
+        
+        try{
+            const resp = await http.patch(`/task/1/${uuid}`, {done: e.target.checked})
+            console.log(resp)
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
+    const deleteTasks = async (obj,uuid) => {
+        try{
+            const resp = await http.delete(`/task/1/${uuid}`, obj)
+            console.log(resp)
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     const getTasks = async () =>{
         try{
             const response = await http.get('/tasks/1?order=asc&pp=5&page=1')
@@ -46,13 +86,14 @@ const WrapperToDo = () => {
   useEffect (()=>{
     getTasks()
 },[filter])
-  
+console.log(posts)
     return(
         <div>
             <Header/>
-            <AddTask posts={posts} setPosts={setPosts}/>
+            <AddTask posts={posts} setPosts={setPosts} postTasks={postTasks}/>
             <FilterTasks filter={filter} setPage={setPage} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
-            <Tasks posts={reverseAndFilterPosts} setPosts={setPosts} page={page}/>
+            <Tasks posts={reverseAndFilterPosts} setPosts={setPosts} page={page} 
+            patchCheckTask={patchCheckTask} patchChangeTask={patchChangeTask} deleteTasks={deleteTasks}/>
             <Pagination amountTask={filterList.length} page={page} setPage={setPage} />
         </div>
     )
