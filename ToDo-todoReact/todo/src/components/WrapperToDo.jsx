@@ -72,13 +72,15 @@ const WrapperToDo = () => {
 
         switch(filter){
             case 'checked':
-               return posts.filter(post => post.isCheck===true)
+                getTasks()
+               return posts.filter(post => post.done===true)
             case 'unchecked':
-                return posts.filter(post => post.isCheck===false)
+                getTasks()
+                return posts.filter(post => post.done===false)
             default:
                 return posts
         }
-      
+
   },[posts,filter])
 
   const reverseAndFilterPosts = sorted==='new'? [...filterList].reverse() : filterList
