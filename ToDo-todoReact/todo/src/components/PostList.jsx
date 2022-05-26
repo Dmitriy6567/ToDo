@@ -18,7 +18,7 @@ const PostList = ({
         posts.map(
           (post, index) =>
             (
-              <ListItem
+              <ListItem key={index}
                 posts={posts}
                 post={post}
                 setPosts={setPosts}

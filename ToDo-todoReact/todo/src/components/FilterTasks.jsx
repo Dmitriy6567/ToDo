@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../styles/FilterTasks.css";
 import Button from "./Button";
 import Select from "./Select";
-
 const FilterTasks = ({ filter, setFilter, sorted, setSorted, setPage }) => {
+
   return (
     <div className="filter__tasks">
       <Button
@@ -11,15 +11,15 @@ const FilterTasks = ({ filter, setFilter, sorted, setSorted, setPage }) => {
         locked={filter === "all"}
         callback={() => {
           setFilter("");
-          setPage(1);
         }}
       />
       <Button
         body={"Done"}
         locked={filter === "done"}
         callback={() => {
+
           setFilter("done");
-          setPage(1);
+          
         }}
       />
       <Button
@@ -27,7 +27,6 @@ const FilterTasks = ({ filter, setFilter, sorted, setSorted, setPage }) => {
         locked={filter === "undone"}
         callback={() => {
           setFilter("undone");
-          setPage(1);
         }}
       />
       <Select

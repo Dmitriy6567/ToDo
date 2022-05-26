@@ -17,6 +17,8 @@ const WrapperToDo = () => {
 
   const [countPage, setCountPage] = useState(0)
 
+  useEffect(() => {setPage(prev => prev = 1)}, [filter] )
+
   const getTasks = async () => {
     try {
       const response = await http.get(
@@ -85,8 +87,6 @@ const WrapperToDo = () => {
       console.log(err);
     }
     getTasks();
-    setPage(page - 1)
-    page===1 && setPage(1)
   };
 
   const deleteCheckTasks = async () => {
