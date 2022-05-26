@@ -1,15 +1,15 @@
 import React from "react";
 import '../styles/Select.css'
 
-const Select = ({defVal, callback}) => {
+const Select = ({ callback}) => {
     
     return(
         <select className="sort" 
-        defaultValue={defVal}
+        // defaultValue={defVal}
         onChange={callback}>
-            <option disabled>{defVal}</option>
-            <option value={'new'}>New</option>
-            <option value={"old"}>Old</option>
+            {/* <option disabled>{defVal}</option> */}
+            <option value={'asc'}>Asc</option>
+            <option value={"desc"}>Desc</option>
         </select>
     )
 }
