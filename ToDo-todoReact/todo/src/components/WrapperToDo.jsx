@@ -136,6 +136,10 @@ const WrapperToDo = () => {
     getPagination()
   },[posts])
 
+  useEffect(() => {if (posts.length === 0 && page>1){
+    setPage(prev => prev-1)};
+    }, [posts.length]);
+
   return (
     <div>
       <Header />
