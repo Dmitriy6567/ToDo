@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import "../styles/Pagination.css";
 import ButtonPagintion from "./ButtonPagination";
 
-const Pagination = ({ amountTask, page, setPage }) => {
-  const countPage = Math.ceil(amountTask / 5);
+const Pagination = ({ amountTask, page, setPage, countPage }) => {
   const countBtn = [...Array(countPage).keys()];
 
   useEffect(() => {

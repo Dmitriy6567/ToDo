@@ -11,15 +11,13 @@ const PostList = ({
   deleteTasks,
   getTasks,
 }) => {
-  const limit = 5;
 
   return (
     <ul className="post__list">
       {posts.length ? (
         posts.map(
           (post, index) =>
-            index >= (page - 1) * limit &&
-            index < page * limit && (
+            (
               <ListItem
                 posts={posts}
                 post={post}

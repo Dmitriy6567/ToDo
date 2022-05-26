@@ -24,12 +24,10 @@ const AddTask = ({ posts, setPosts, postTasks, getTasks,deleteCheckTasks, delete
   };
 
   const clearDone = () => {
-    // setPosts(posts.filter((post) => post.done === false));
     deleteCheckTasks()
   };
 
   const clearUndone = () => {
-    // setPosts(posts.filter((post) => post.done === true));
     deleteUncheckTasks()
   };
 

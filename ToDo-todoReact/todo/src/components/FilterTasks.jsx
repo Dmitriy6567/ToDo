@@ -31,7 +31,6 @@ const FilterTasks = ({ filter, setFilter, sorted, setSorted, setPage }) => {
         }}
       />
       <Select
-        // value={sorted}
         callback={(e) => setSorted(e.target.value)}
       />
     </div>
