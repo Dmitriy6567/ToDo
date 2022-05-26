@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import '../styles/AddTask.css'
 import Button from "./Button";
 import Input from "./Input";
@@ -15,12 +15,10 @@ const AddTask = ({posts,setPosts, postTasks,getTasks}) => {
         }
 
         if(task.trim()){
-            postTasks(newPost)
-            getTasks()
-            // setPosts([...posts,newPost])
+            postTasks(newPost).then(()=>getTasks())
+            console.log(getTasks())
         }
         setTask('')
-        getTasks()
     }
 
 

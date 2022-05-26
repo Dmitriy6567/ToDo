@@ -1,4 +1,4 @@
-import React,{useState, useMemo, useEffect} from "react";
+import React,{useState, useEffect} from "react";
 import AddTask from "../components/AddTask";
 import FilterTasks from "../components/FilterTasks";
 import Header from "../components/Header";
@@ -10,7 +10,9 @@ const WrapperToDo = () => {
 
     const [posts, setPosts] = useState([])
 
-    const [filter, setFilter] = useState("all")
+    const [filter, setFilter] = useState("")
+
+    const [filterPosts, setFilterPost] = useState([])
 
     const [sorted, setSorted] = useState('Sort by date')
 
@@ -26,17 +28,17 @@ const WrapperToDo = () => {
         };
 
     const patchChangeTask = async (newValue, uuid) =>  {
-        
         try {
             const resp = await http.patch(`/task/1/${uuid}`, {name: newValue})
             console.log(resp)
         }catch(err) {
             console.log(err)
         }
+        getTasks()
     }
 
     const patchCheckTask = async (e, uuid) => {
-        
+        console.log(e.target.checked)
         try{
             const resp = await http.patch(`/task/1/${uuid}`, {done: e.target.checked})
             console.log(resp)
@@ -44,6 +46,7 @@ const WrapperToDo = () => {
         catch(err){
             console.log(err);
         }
+        getTasks()
     }
 
     const deleteTasks = async (obj,uuid) => {
@@ -53,39 +56,39 @@ const WrapperToDo = () => {
         }
         catch(err){
             console.log(err);
-        }
+        } 
+        getTasks()
     }
 
     const getTasks = async () =>{
         try{
-            const response = await http.get('/tasks/1?order=asc&pp=5&page=1')
+            const response = await http.get(`/tasks/1?order=asc&pp=5&page=1&filterBy=${filter}`)
             const arr = response.data.tasks
             console.log('Массив',arr);
-            setPosts(prev=>prev= arr)
+            console.log(filter)
+            setPosts(prev=>prev=arr)
+            // return arr
         }
         catch(err){
             console.log(err)
         }
     }
 
-    const filterList = useMemo(()=>{
+     useEffect(()=>{
+        getTasks()
+        // .then(response=>setFilterPost(()=>{
+        //     // switch(filter){
+        //     //     case 'checked':     
+        //     //        return response.filter(post => post.done===true)
+        //     //     case 'unchecked':
+        //     //         return response.filter(post => post.done===false)
+        //     //     default:
+        //     //         return response
+        //     // }
+        // }))
+        },[filter])
 
-        switch(filter){
-            case 'checked':
-               return posts.filter(post => post.done===true)
-            case 'unchecked':
-                return posts.filter(post => post.done===false)
-            default:
-                return posts
-        }
-
-  },[posts,filter])
-
-  const reverseAndFilterPosts = sorted==='new'? [...filterList].reverse() : filterList
-
-  useEffect (()=>{
-    getTasks()
-},[filter])
+// const reverseAndFilterPosts = sorted==='new'? [...filterPosts].reverse() : filterPosts
 
 console.log(posts)
     return(
@@ -93,9 +96,9 @@ console.log(posts)
             <Header/>
             <AddTask posts={posts} setPosts={setPosts} postTasks={postTasks} getTasks={getTasks}/>
             <FilterTasks filter={filter} setPage={setPage} setFilter={setFilter} sorted={sorted} setSorted={setSorted}/>
-            <Tasks posts={reverseAndFilterPosts} setPosts={setPosts} page={page} 
+            <Tasks posts={posts} setPosts={setFilterPost} page={page} 
             patchCheckTask={patchCheckTask} patchChangeTask={patchChangeTask} deleteTasks={deleteTasks} getTasks={getTasks} />
-            <Pagination amountTask={filterList.length} page={page} setPage={setPage} />
+            <Pagination amountTask={filter.length} page={page} setPage={setPage} />
         </div>
     )
 }

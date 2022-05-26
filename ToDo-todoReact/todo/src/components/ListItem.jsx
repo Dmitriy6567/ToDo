@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import Button from "./Button"
 import Input from "./Input";
 import '../styles/PostItem.css'
@@ -6,19 +6,11 @@ import ModalWindow from "./ModalWindow";
 
 const ListItem = ({post,setPosts, patchChangeTask, patchCheckTask, deleteTasks, posts, getTasks}) => {
 
-    const [done, setCheckbox] = useState(post.done)
-
     const toggleCheck = (e,uuid) => {
-        setPosts(prev=>prev.map(el=>el.uuid===post.uuid
-            ? {...el,done:!e.target.checked}
-            :el))
-        setCheckbox(e.target.value)
-        patchCheckTask(e,uuid)
-        // getTasks()
+        patchCheckTask(e,uuid)  
     }
     
     const deletePosts = () =>{
-        setPosts(prev=>prev.filter(el=>el.uuid!==post.uuid))
         deleteTasks(post,post.uuid)
     }
 
@@ -71,11 +63,12 @@ const ListItem = ({post,setPosts, patchChangeTask, patchCheckTask, deleteTasks, 
         setModalValue(post.name)
         setModal(true)
     }
+    useEffect(() => {getTasks()}, [])
     
     return(
         <li className="task">
             <ModalWindow modalValue={modalValue} posts={posts} setModalValue={setModalValue} visible={modal} setVisible={setModal} post={post} setPosts={setPosts} patchChangeTask={patchChangeTask}/>
-            <Input type={'checkbox'} classStyle={'flag'} defaultChecked={done} callback={(e)=>toggleCheck(e,post.uuid)}/>
+            <Input type={'checkbox'} classStyle={'flag'} checked={post.done} callback={(e)=>toggleCheck(e,post.uuid)}/>
             {editing ? <span className="todo" onClick={editingTask}>
                 {post.name.length<20 ?
                 post.name:
