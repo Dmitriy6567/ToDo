@@ -8,7 +8,7 @@ import PostList from "./PostList";
 
 const WrapperToDo = () => {
   const [posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("asc");
   const [page, setPage] = useState(1);
   const [countPage, setCountPage] = useState(0);
@@ -19,6 +19,9 @@ const WrapperToDo = () => {
         `/tasks/1?pp=5&page=${page}&order=${sort}&filterBy=${filter}`
       );
       setPosts(response.data.tasks);
+      const count = response.data.count;
+      setCountPage(Math.ceil(count / 5));
+      console.log(posts)
     } catch (err) {
       alert(err);
     }
@@ -49,9 +52,6 @@ const WrapperToDo = () => {
       alert(err);
     }
     getTasks()
-    if (page === 1) {
-      setPage(1);
-    }
   };
 
   const deleteTasks = async (obj, uuid) => {
@@ -88,11 +88,7 @@ const WrapperToDo = () => {
     } catch (err) {
       alert(err);
     }
-
     getTasks();
-    if (page === 1) {
-      setPage(1);
-    }
   };
 
   const deleteUncheckTasks = async () => {
@@ -106,19 +102,6 @@ const WrapperToDo = () => {
       alert(err);
     }
     getTasks();
-    if (page === 1) {
-      setPage(1);
-    }
-  };
-
-  const getPagination = async () => {
-    try {
-      const response = await http.get(`/tasks/1?filterBy=${filter}`);
-      const count = response.data.count;
-      setCountPage(Math.ceil(count / 5));
-    } catch (err) {
-      alert(err);
-    }
   };
 
   useEffect(() => {
@@ -126,7 +109,6 @@ const WrapperToDo = () => {
   }, [filter, sort, page]);
 
   useEffect(() => {
-    getPagination();
     if (posts.length === 0 && page > 1) {
       setPage(page - 1);
     }

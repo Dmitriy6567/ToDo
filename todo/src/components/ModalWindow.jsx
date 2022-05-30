@@ -15,13 +15,16 @@ const ModalWindow = ({
   visible && rootClasses.push("active");
 
   const saveTask = (e, uuid) => {
-    setPosts((prev) =>
-      prev.map((el) =>
-        el.uuid === post.uuid ? { ...el, name: modalValue } : el
-      )
-    );
-    setVisible(false);
-    patchChangeTask(modalValue, uuid);
+    // setPosts((prev) =>
+    //   prev.map((el) =>
+    //     el.uuid === post.uuid ? { ...el, name: modalValue } : el
+    //   )
+    // );
+    if(modalValue.length){
+      post.name=modalValue;
+      setVisible(false);
+      patchChangeTask(modalValue, uuid);
+    }
   };
 
   const closeEditing = () => {

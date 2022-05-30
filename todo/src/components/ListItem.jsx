@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import "../styles/PostItem.css";
@@ -12,7 +12,6 @@ const ListItem = ({
   deleteTasks,
   getTasks,
 }) => {
-
   const [modal, setModal] = useState(false);
   const [modalValue, setModalValue] = useState(post.name);
   const [editing, setEditing] = useState(true);
@@ -34,31 +33,22 @@ const ListItem = ({
     if (e.keyCode === 27) {
       setInpEditing(post.name);
       setEditing(true);
-    } else if (e.keyCode === 13) {
-      inpEditing.length
-        ? setPosts(
-            (prev) =>
-              prev.map((el) =>
-                el.uuid === post.uuid ? { ...el, name: e.target.value } : el
-              ),
-            setEditing(true)
-          )
-        : setEditing(true);
-
-      patchChangeTask(inpEditing, uuid);
-    } else if(e.type==="blur"){
-      inpEditing.length
-      ? setPosts(
-          (prev) =>
-            prev.map((el) =>
-              el.uuid === post.uuid ? { ...el, name: e.target.value } : el
-            ),
-          setEditing(true)
-        )
-      : setEditing(true);
-
-    patchChangeTask(inpEditing, uuid);
-    }
+    } else if (e.keyCode === 13 || e.type==="blur") {
+      if(inpEditing.length){
+        post.name=inpEditing;
+        setEditing(true)
+        patchChangeTask(inpEditing, uuid);
+      }
+        // ? 
+        // setPosts(
+        //     (prev) =>
+        //       prev.map((el) =>
+        //         el.uuid === post.uuid ? { ...el, name: e.target.value } : el
+        //       ),
+        //     setEditing(true)
+        //   )
+        // : setEditing(true);
+    } 
   };
 
   const modalWindow = (e) => {
@@ -66,9 +56,6 @@ const ListItem = ({
     setModalValue(post.name);
     setModal(true);
   };
-  // useEffect(() => {
-  //   getTasks();
-  // }, []);
 
   return (
     <li className="task">
