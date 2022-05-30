@@ -1,4 +1,3 @@
-import React from 'react';
 import WrapperToDo from './components/WrapperToDo';
 import './styles/App.css'
 

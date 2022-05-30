@@ -1,61 +1,82 @@
-import React,{useState} from "react";
-import '../styles/AddTask.css'
+import React, { useEffect, useState } from "react";
+import "../styles/AddTask.css";
 import Button from "./Button";
 import Input from "./Input";
 
-const AddTask = ({posts,setPosts}) => {
-    
-    const [task,setTask] = useState('');
+const AddTask = ({ posts, postTasks, getTasks,deleteCheckTasks, deleteUncheckTasks, deleteAllTasks }) => {
+  const [task, setTask] = useState("");
+  const [disableBtnAllTasks,setDisableBtnAllTasks] = useState(false)
+  const [disableBtnDoneTasks,setDisableBtnDoneTasks] = useState(false)
+  const [disableBtnUndoneTasks,setDisableBtnUndoneTasks] = useState(false)
 
-    const data = new Date();
+  const addNewPost = () => {
+    const newPost = {
+      name: task,
+      done: false,
+    };
 
-    const  addNewPost = () => {
-
-        const newPost = {
-            id: Date.now(),
-            body:task,
-            date: data.getDate() + '/'+ (data.getMonth()<10 ? '0' + data.getMonth() : data.getMonth()) + '/' + data.getFullYear(),
-            isCheck: false
-        }
-
-        if(task.trim()){
-            setPosts([...posts,newPost])
-        }
-
-        setTask('')
+    if (task.trim()) {
+      postTasks(newPost).then(() => getTasks());
     }
+    setTask("");
+  };
 
-    const clearAll = () =>{
-        setPosts([])
+  const clearAll = () => {
+    deleteAllTasks();
+  };
+
+  const clearDone = () => {
+    deleteCheckTasks()
+  };
+
+  const clearUndone = () => {
+    deleteUncheckTasks()
+  };
+
+  const getValue = (e) => {
+    setTask(e.target.value);
+  };
+
+  const addEnter = (e) => {
+    if (e.code === "Enter") {
+      addNewPost();
     }
+  };
 
-    const clearDone = () =>{
-        setPosts(posts.filter(post => post.isCheck===false))
+  useEffect(()=>{
+    if(posts.length>0){
+      setDisableBtnAllTasks(false)
+    } else{
+      setDisableBtnAllTasks(true)
     }
-
-    const clearUndone = () => {
-        setPosts(posts.filter(post => post.isCheck===true))
+    if(posts.filter(post=>post.done===true).length>0){
+      setDisableBtnDoneTasks(false)
+    } else {
+      setDisableBtnDoneTasks(true)
     }
-
-    const getValue = (e) =>{
-        setTask(e.target.value);
+    if(posts.filter(post=>post.done===false).length>0){
+      setDisableBtnUndoneTasks(false)
+    } else {
+      setDisableBtnUndoneTasks(true)
     }
+  },[posts])
 
-    const addEnter = (e) => {
-        if(e.code==="Enter"){
-            addNewPost()
-        }
-    }
-
-    return(
-        <div className="add__task">
-            <Input type={'text'} placeholder={'I want to...'} classStyle={'inp'} value={task} callback={getValue} addEnter={addEnter} />
-            <Button body={'Add'} callback={addNewPost}/>
-            <Button body={'Clear All'} callback={clearAll} />
-            <Button body={'Clear done'} callback={clearDone}/>
-            <Button body={'Clear undone'} callback={clearUndone}/>
-        </div>
-    )
-}
+  return (
+    <div className="add__task">
+      <Input
+        type={"text"}
+        placeholder={"I want to..."}
+        classStyle={"inp"}
+        value={task}
+        callback={getValue}
+        addEnter={addEnter}
+      />
+      <Button body={"Add"} callback={addNewPost}>Add</Button>
+      <Button body={"Clear All"} locked={disableBtnAllTasks} callback={clearAll} />
+      <Button body={"Clear done"} locked={disableBtnDoneTasks} callback={clearDone} />
+      <Button body={"Clear undone"} locked={disableBtnUndoneTasks} callback={clearUndone} />
+    </div>
+  );
+};
 
 export default AddTask;

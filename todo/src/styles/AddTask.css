@@ -1,7 +1,7 @@
 .add__task{
     display: flex;
     justify-content: center;
-    padding-right: 5%;
+    padding-right: 4%;
 }
 
 @media  screen and (min-width: 250px) and (max-width: 500px){

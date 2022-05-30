@@ -1,0 +1,40 @@
+.task {
+    font-size: 20px;
+    padding-top: 3%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.date {
+    margin-left: 30%;
+    margin-top: 5px;
+}
+
+.todo {
+    width: 15%;
+}
+
+@media screen and (min-width:580px) and (max-width:850px){
+    .date {
+        margin-left: 5%;
+        margin-top: 5px;
+    }
+    .todo {
+        width: 25%;
+        margin-top: 5px;
+    }
+}
+
+@media screen and (min-width:200px) and (max-width:580px){
+    .date {
+        margin-left: 5%;
+        margin-top: 7px;
+        font-size: 14px
+    }
+    .todo {
+        width: 25%;
+        margin-top: 5px;
+        font-size: 16px;
+    }
+}

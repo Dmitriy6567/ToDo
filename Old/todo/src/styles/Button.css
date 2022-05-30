@@ -1,0 +1,23 @@
+.btn {
+    width: 90px;
+    height: 35px;
+    margin-left: 2%;
+    color: white;
+    background-color: rgb(68, 63, 63);
+    border: 1px solid yellow;
+ }
+
+ .btn:hover {
+    border: 2px solid yellow;
+ }
+
+ @media screen and (min-width:200px) and (max-width:580px){
+   .filter__tasks .btn{
+      width: 50px;
+      font-size: 11px;
+   }
+
+   .btn{
+      margin: 3px;
+   }
+}

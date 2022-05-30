@@ -1,18 +1,39 @@
-import React,{useMemo, useState} from "react";
-import '../styles/FilterTasks.css'
+import "../styles/FilterTasks.css";
 import Button from "./Button";
 import Select from "./Select";
+const FilterTasks = ({ filter, setFilter, setSort}) => {
 
-const FilterTasks = ({setFilter}) => {
+  const DONE ="done"
+  const UNDONE ="undone"
 
-    return(
-        <div className="filter__tasks">
-            <Button body={"All"} />
-            <Button body={"Done"} callback={setFilter} check={'checked'}/>
-            <Button body={"Undone"} />
-            <Select defVal={'Sort by date'}/>
-        </div>
-    )
-}
+  return (
+    <div className="filter__tasks">
+      <Button
+        body={"All"}
+        locked={filter === "all"}
+        callback={() => {
+          setFilter("");
+        }}
+      />
+      <Button
+        body={DONE}
+        locked={filter === DONE}
+        callback={() => {
+          setFilter(DONE);        
+        }}
+      />
+      <Button
+        body={UNDONE}
+        locked={filter === UNDONE}
+        callback={() => {
+          setFilter(UNDONE);
+        }}
+      />
+      <Select
+        callback={(e) => setSort(e.target.value)}
+      />
+    </div>
+  );
+};
 
 export default FilterTasks;

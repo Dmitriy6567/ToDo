@@ -1,20 +1,49 @@
 .post__list {
     color: white;
     list-style-type: none;
+    height: 450px;
+    border: 1px solid yellow;
+    width: 80%;
+    margin-top: 3%;
+    margin-left: 10%;
+    padding-bottom: 5%;
+    word-wrap: break-word;
 }
 
-hr {
-    width: 90%;
-    margin-right: 7%;
- }
+ h2 {
+    text-align: center;
+}
 
- @media screen and (min-width:200px) and (max-width:580px){
-    hr {
-        width: 80%;
-        margin-right: 7%;
-     }
+ @media screen and (min-width:200px) and (max-width:650px){
 
      .post__list {
-        margin-right: 19%;
+        width: 75%;
+        margin-left: 6%;
+    }
+}
+
+@media screen and (min-width:490px) and (max-width:650px){
+    .post__list{
+        height: 400px;
+    }
+}
+
+@media screen and (min-width:270px) and (max-width:490px){
+    .post__list{
+        height: 500px;
+    }
+}
+
+@media screen and (min-width:350px) and (max-width:450px){
+    h2 {
+        text-align: center;
+        margin-right: 10%;
+    }
+}
+
+@media screen and (min-width:250px) and (max-width:350px){
+    h2 {
+        text-align: center;
+        margin-right: 25%;
     }
 }

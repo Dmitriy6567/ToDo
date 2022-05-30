@@ -1,29 +1,120 @@
-import React,{useState} from "react";
-import Button from "./Button"
+import React, { useEffect, useState } from "react";
+import Button from "./Button";
 import Input from "./Input";
-import '../styles/PostItem.css'
+import "../styles/PostItem.css";
+import ModalWindow from "./ModalWindow";
 
-const ListItem = ({post,setPosts}) => {
+const ListItem = ({
+  post,
+  setPosts,
+  patchChangeTask,
+  patchCheckTask,
+  deleteTasks,
+  getTasks,
+}) => {
 
-    const [isCheck, setCheckbox] = useState(post.isCheck)
+  const [modal, setModal] = useState(false);
+  const [modalValue, setModalValue] = useState(post.name);
+  const [editing, setEditing] = useState(true);
+  const [inpEditing, setInpEditing] = useState(post.name);
 
-    const toggleCheck = (e) => {
-        setPosts(prev=>prev.map(el=>el.id===post.id? {...el,isCheck:e.target.checked}:el))
-        setCheckbox(e.target.value)
+  const toggleCheck = (e, uuid) => {
+    patchCheckTask(e, uuid);
+  };
+
+  const deletePosts = () => {
+    deleteTasks(post, post.uuid);
+  };
+
+  const editingTask = () => {
+    setEditing(false);
+  };
+
+  const saveTask = (e, inpEditing, uuid) => {
+    if (e.keyCode === 27) {
+      setInpEditing(post.name);
+      setEditing(true);
+    } else if (e.keyCode === 13) {
+      inpEditing.length
+        ? setPosts(
+            (prev) =>
+              prev.map((el) =>
+                el.uuid === post.uuid ? { ...el, name: e.target.value } : el
+              ),
+            setEditing(true)
+          )
+        : setEditing(true);
+
+      patchChangeTask(inpEditing, uuid);
+    } else if(e.type==="blur"){
+      inpEditing.length
+      ? setPosts(
+          (prev) =>
+            prev.map((el) =>
+              el.uuid === post.uuid ? { ...el, name: e.target.value } : el
+            ),
+          setEditing(true)
+        )
+      : setEditing(true);
+
+    patchChangeTask(inpEditing, uuid);
     }
-    
-    const deletePosts = () =>{
-        setPosts(prev=>prev.filter(el=>el.id!==post.id))
-    }
+  };
 
-    return(
-        <li className="task">
-            <Input type={'checkbox'} defaultChecked={isCheck} callback={toggleCheck}/>
-            <span className="todo">{post.body}</span>
-            <span className="date">{post.date}</span>
-            <Button body={"Delete"} callback={deletePosts}/>
-        </li>
-    )
-}
+  const modalWindow = (e) => {
+    e.stopPropagation();
+    setModalValue(post.name);
+    setModal(true);
+  };
+  // useEffect(() => {
+  //   getTasks();
+  // }, []);
+
+  return (
+    <li className="task">
+      <ModalWindow
+        modalValue={modalValue}
+        setModalValue={setModalValue}
+        visible={modal}
+        setVisible={setModal}
+        post={post}
+        setPosts={setPosts}
+        patchChangeTask={patchChangeTask}
+      />
+      <Input
+        type={"checkbox"}
+        classStyle={"flag"}
+        checked={post.done}
+        callback={(e) => toggleCheck(e, post.uuid)}
+      />
+      {editing ? (
+        <span className="todo" onClick={editingTask}>
+          {post.name.length < 15 ? (
+            post.name
+          ) : (
+            <>
+              {post.name.substring(0, 10)}
+              <Button
+                body={"..."}
+                callback={modalWindow}
+              />
+            </>
+          )}
+        </span>
+      ) : (
+        <input
+          autoFocus
+          onBlur={(e) => saveTask(e, inpEditing, post.uuid)}
+          onChange={(e) => setInpEditing(e.target.value)}
+          onKeyDown={(e) => saveTask(e, inpEditing, post.uuid)}
+          defaultValue={post.name}
+          style={{ width: "39%",marginLeft:"3%" }}
+        />
+      )}
+      <span className="date">{post.updatedAt.substring(0,10)}</span>
+      <Button body={"Delete"} callback={deletePosts} />
+    </li>
+  );
+};
 
 export default ListItem;

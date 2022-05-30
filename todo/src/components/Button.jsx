@@ -1,11 +1,15 @@
-import React from "react";
-import '../styles/Button.css'
+import "../styles/Button.css";
 
-const Button = ({body,callback,check}) =>{
-
-    return(
-        <button onClick={callback} className="btn">{body}</button>
-    )
-}
+const Button = ({ body, callback, locked }) => {
+  return (
+    <button
+      disabled={locked}
+      onClick={callback}
+      className={locked ? "btn-disabled" : "btn"}
+    >
+      {body}
+    </button>
+  );
+};
 
 export default Button;
