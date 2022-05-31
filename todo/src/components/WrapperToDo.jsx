@@ -8,7 +8,7 @@ import PostList from "./PostList";
 
 const WrapperToDo = () => {
   const [posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("asc");
   const [page, setPage] = useState(1);
   const [countPage, setCountPage] = useState(0);
@@ -21,7 +21,6 @@ const WrapperToDo = () => {
       setPosts(response.data.tasks);
       const count = response.data.count;
       setCountPage(Math.ceil(count / 5));
-      console.log(posts)
     } catch (err) {
       alert(err);
     }
@@ -31,7 +30,7 @@ const WrapperToDo = () => {
     try {
       await http.post("task/1", obj);
     } catch (err) {
-      alert(err);
+      alert(err.response.data.message);
     }
   };
 
@@ -41,6 +40,7 @@ const WrapperToDo = () => {
     } catch (err) {
       alert(`Ошибка редактирования задачи: ${err}`);
     }
+    getTasks()
   };
 
   const patchCheckTask = async (e, uuid) => {
@@ -61,16 +61,11 @@ const WrapperToDo = () => {
       alert(err);
     }
     getTasks();
-    if (posts.length === 1) {
-      setPage(page - 1);
-    }
-    if (page === 1) {
-      setPage(1);
-    }
   };
 
   const deleteAllTasks = async () => {
     const arr = posts.map(({ uuid }) => http.delete(`/task/1/${uuid}`));
+
     try {
       await Promise.all(arr);
     } catch (err) {
@@ -80,21 +75,19 @@ const WrapperToDo = () => {
   };
 
   const deleteCheckTasks = async () => {
-    const filterPosts = posts
-      .filter((post) => post.done === true)
-      .map(({ uuid }) => http.delete(`/task/1/${uuid}`));
+    const filterPosts = posts.map((post) =>post.done && http.delete(`/task/1/${post.uuid}`));
+
     try {
       await Promise.all(filterPosts);
     } catch (err) {
       alert(err);
     }
+
     getTasks();
   };
 
   const deleteUncheckTasks = async () => {
-    const filterPosts = posts
-      .filter((post) => post.done === false)
-      .map(({ uuid }) => http.delete(`/task/1/${uuid}`));
+    const filterPosts = posts.map((post) =>!post.done && http.delete(`/task/1/${post.uuid}`));
 
     try {
       await Promise.all(filterPosts);
@@ -103,10 +96,6 @@ const WrapperToDo = () => {
     }
     getTasks();
   };
-
-  useEffect(() => {
-    getTasks();
-  }, [filter, sort, page]);
 
   useEffect(() => {
     if (posts.length === 0 && page > 1) {
@@ -117,6 +106,10 @@ const WrapperToDo = () => {
   useEffect(() => {
     setPage(1);
   }, [filter]);
+
+  useEffect(() => {
+    getTasks();
+  }, [filter, sort, page]);
 
   return (
     <div>
@@ -139,7 +132,6 @@ const WrapperToDo = () => {
         getTasks={getTasks}
       />
       <Pagination
-        amountTask={filter.length}
         page={page}
         setPage={setPage}
         countPage={countPage}

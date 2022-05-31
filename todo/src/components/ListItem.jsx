@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import "../styles/PostItem.css";
@@ -12,6 +12,7 @@ const ListItem = ({
   deleteTasks,
   getTasks,
 }) => {
+
   const [modal, setModal] = useState(false);
   const [modalValue, setModalValue] = useState(post.name);
   const [editing, setEditing] = useState(true);
@@ -29,27 +30,12 @@ const ListItem = ({
     setEditing(false);
   };
 
-  const saveTask = (e, inpEditing, uuid) => {
-    if (e.keyCode === 27) {
-      setInpEditing(post.name);
-      setEditing(true);
-    } else if (e.keyCode === 13 || e.type==="blur") {
-      if(inpEditing.length){
-        post.name=inpEditing;
-        setEditing(true)
-        patchChangeTask(inpEditing, uuid);
-      }
-        // ? 
-        // setPosts(
-        //     (prev) =>
-        //       prev.map((el) =>
-        //         el.uuid === post.uuid ? { ...el, name: e.target.value } : el
-        //       ),
-        //     setEditing(true)
-        //   )
-        // : setEditing(true);
-    } 
-  };
+  const saveTask=(e,uuid)=>{
+    if(e.key==='Enter' || e.type==='blur' ||e.key==='Escape'){
+      e.key!=='Escape' && patchChangeTask(e.target.value, uuid);
+      setEditing(true)
+    }
+  }
 
   const modalWindow = (e) => {
     e.stopPropagation();
@@ -91,9 +77,8 @@ const ListItem = ({
       ) : (
         <input
           autoFocus
-          onBlur={(e) => saveTask(e, inpEditing, post.uuid)}
-          onChange={(e) => setInpEditing(e.target.value)}
-          onKeyDown={(e) => saveTask(e, inpEditing, post.uuid)}
+          onBlur={(e) => saveTask(e, post.uuid)}
+          onKeyDown={(e) => saveTask(e, post.uuid)}
           defaultValue={post.name}
           style={{ width: "39%",marginLeft:"3%" }}
         />

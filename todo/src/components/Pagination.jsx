@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
 import "../styles/Pagination.css";
 import ButtonPagintion from "./ButtonPagination";
 
-const Pagination = ({ amountTask, page, setPage, countPage }) => {
+const Pagination = ({ page, setPage, countPage }) => {
   const countBtn = [...Array(countPage).keys()];
-  
-   useEffect(() => {
-    page >= amountTask / 5 && countPage > 0 && setPage(countPage);
-  }, [amountTask]);
 
   const lastPage = () => {
     if(page>1){

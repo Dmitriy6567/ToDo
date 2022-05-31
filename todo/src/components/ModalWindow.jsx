@@ -7,19 +7,13 @@ const ModalWindow = ({
   visible,
   setVisible,
   post,
-  setPosts,
   patchChangeTask,
 }) => {
   const rootClasses = ["modal-window"];
 
   visible && rootClasses.push("active");
 
-  const saveTask = (e, uuid) => {
-    // setPosts((prev) =>
-    //   prev.map((el) =>
-    //     el.uuid === post.uuid ? { ...el, name: modalValue } : el
-    //   )
-    // );
+  const saveTask = (uuid) => {
     if(modalValue.length){
       post.name=modalValue;
       setVisible(false);
@@ -40,7 +34,7 @@ const ModalWindow = ({
         />
         <Button
           body={"Save"}
-          callback={(e) => saveTask(modalValue, post.uuid)}
+          callback={() => saveTask(post.uuid)}
         />
         <Button body={"Close"} callback={closeEditing} />
       </div>
