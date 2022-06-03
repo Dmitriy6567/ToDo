@@ -8,19 +8,19 @@ import PostList from "./PostList";
 
 const WrapperToDo = () => {
   const [posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState("");
-  const [sort, setSort] = useState("asc");
+  const [filter, setFilter] = useState("all");
+  const [sort, setSort] = useState("new");
   const [page, setPage] = useState(1);
   const [countPage, setCountPage] = useState(0);
 
   const getTasks = async () => {
     try {
       const response = await http.get(
-        `/tasks/1?pp=5&page=${page}&order=${sort}&filterBy=${filter}`
+        `/postTask/?filter=${filter}&sort=${sort}&page=${page}&limit=${5}`
       );
-      setPosts(response.data.tasks);
-      const count = response.data.count;
-      setCountPage(Math.ceil(count / 5));
+      setPosts(response.data.result);
+      const count = response.data.countPage;
+      setCountPage(Math.ceil(count/ 5));
     } catch (err) {
       alert(err);
     }
@@ -28,7 +28,7 @@ const WrapperToDo = () => {
 
   const postTasks = async (obj) => {
     try {
-      await http.post("task/1", obj);
+      await http.post("postTask/", obj);
     } catch (err) {
       alert(err.response.data.message);
     }
@@ -36,7 +36,7 @@ const WrapperToDo = () => {
 
   const patchChangeTask = async (newValue, uuid) => {
     try {
-      await http.patch(`/task/1/${uuid}`, { name: newValue });
+      await http.patch(`postTask/${uuid}`, { name: newValue });
     } catch (err) {
       alert(`Ошибка редактирования задачи: ${err}`);
     }
@@ -45,8 +45,8 @@ const WrapperToDo = () => {
 
   const patchCheckTask = async (e, uuid) => {
     try {
-      await http.patch(`/task/1/${uuid}`, {
-        done: e.target.checked,
+      await http.patch(`postTask/${uuid}`, {
+        done: e.target.checked
       });
     } catch (err) {
       alert(err);
@@ -56,10 +56,15 @@ const WrapperToDo = () => {
 
   const deleteTasks = async (obj, uuid) => {
     try {
-      await http.delete(`/task/1/${uuid}`, obj);
+      await http.delete(`postTask/${uuid}`, obj);
+      if(posts.length<=1){
+        setPage(page-1)
+      }
     } catch (err) {
       alert(err);
     }
+
+    console.log(posts.length)
     getTasks();
   };
 
@@ -125,11 +130,9 @@ const WrapperToDo = () => {
       <FilterTasks filter={filter} setFilter={setFilter} setSort={setSort} />
       <PostList
         posts={posts}
-        setPosts={setPosts}
         patchCheckTask={patchCheckTask}
         patchChangeTask={patchChangeTask}
         deleteTasks={deleteTasks}
-        getTasks={getTasks}
       />
       <Pagination
         page={page}

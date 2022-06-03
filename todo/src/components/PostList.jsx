@@ -3,11 +3,9 @@ import "../styles/PostList.css";
 
 const PostList = ({
   posts,
-  setPosts,
   patchChangeTask,
   patchCheckTask,
   deleteTasks,
-  getTasks,
 }) => {
 
   return (
@@ -18,11 +16,9 @@ const PostList = ({
             (
               <ListItem key={index}
                 post={post}
-                setPosts={setPosts}
                 patchChangeTask={patchChangeTask}
                 patchCheckTask={patchCheckTask}
                 deleteTasks={deleteTasks}
-                getTasks={getTasks}
               />
             )
         )

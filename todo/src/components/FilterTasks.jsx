@@ -12,7 +12,7 @@ const FilterTasks = ({ filter, setFilter, setSort}) => {
         body={"All"}
         locked={filter === "all"}
         callback={() => {
-          setFilter("");
+          setFilter("all");
         }}
       />
       <Button

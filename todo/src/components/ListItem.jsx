@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import "../styles/PostItem.css";
@@ -6,11 +6,9 @@ import ModalWindow from "./ModalWindow";
 
 const ListItem = ({
   post,
-  setPosts,
   patchChangeTask,
   patchCheckTask,
   deleteTasks,
-  getTasks,
 }) => {
 
   const [modal, setModal] = useState(false);
@@ -20,6 +18,7 @@ const ListItem = ({
 
   const toggleCheck = (e, uuid) => {
     patchCheckTask(e, uuid);
+    console.log(post.name, post.name.length)
   };
 
   const deletePosts = () => {
@@ -32,7 +31,7 @@ const ListItem = ({
 
   const saveTask=(e,uuid)=>{
     if(e.key==='Enter' || e.type==='blur' ||e.key==='Escape'){
-      e.key!=='Escape' && patchChangeTask(e.target.value, uuid);
+      e.key!=='Escape' && patchChangeTask(inpEditing, uuid);
       setEditing(true)
     }
   }
@@ -51,7 +50,6 @@ const ListItem = ({
         visible={modal}
         setVisible={setModal}
         post={post}
-        setPosts={setPosts}
         patchChangeTask={patchChangeTask}
       />
       <Input
@@ -79,11 +77,12 @@ const ListItem = ({
           autoFocus
           onBlur={(e) => saveTask(e, post.uuid)}
           onKeyDown={(e) => saveTask(e, post.uuid)}
-          defaultValue={post.name}
+          value={inpEditing}
+          onChange={(e)=>setInpEditing(e.target.value)}
           style={{ width: "39%",marginLeft:"3%" }}
         />
       )}
-      <span className="date">{post.updatedAt.substring(0,10)}</span>
+      <span className="date">{post.createdAt.substring(0,10)}</span>
       <Button body={"Delete"} callback={deletePosts} />
     </li>
   );
