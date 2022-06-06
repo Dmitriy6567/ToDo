@@ -26,6 +26,7 @@ const ListItem = ({
   };
 
   const editingTask = () => {
+    setInpEditing(post.name)
     setEditing(false);
   };
 

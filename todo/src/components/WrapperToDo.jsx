@@ -16,13 +16,13 @@ const WrapperToDo = () => {
   const getTasks = async () => {
     try {
       const response = await http.get(
-        `/postTask/?filter=${filter}&sort=${sort}&page=${page}&limit=${5}`
+        `postTask/?filter=${filter}&sort=${sort}&page=${page}&limit=${5}`
       );
       setPosts(response.data.result);
       const count = response.data.countPage;
       setCountPage(Math.ceil(count/ 5));
     } catch (err) {
-      alert(err);
+      console.log('Ошибка гет запрсоа',err);
     }
   };
 
@@ -30,7 +30,7 @@ const WrapperToDo = () => {
     try {
       await http.post("postTask/", obj);
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response);
     }
   };
 
@@ -57,33 +57,27 @@ const WrapperToDo = () => {
   const deleteTasks = async (obj, uuid) => {
     try {
       await http.delete(`postTask/${uuid}`, obj);
-      if(posts.length<=1){
-        setPage(page-1)
-      }
+      await getTasks();
     } catch (err) {
       alert(err);
     }
 
     console.log(posts.length)
-    getTasks();
+    
   };
 
   const deleteAllTasks = async () => {
-    const arr = posts.map(({ uuid }) => http.delete(`/task/1/${uuid}`));
-
     try {
-      await Promise.all(arr);
+      await http.post(`postTask/deleteAll`, []);
     } catch (err) {
       alert(err);
     }
     getTasks();
   };
 
-  const deleteCheckTasks = async () => {
-    const filterPosts = posts.map((post) =>post.done && http.delete(`/task/1/${post.uuid}`));
-
+  const deleteCheckTasks = async (obj) => {
     try {
-      await Promise.all(filterPosts);
+      await http.post(`postTask/deleteDone`,obj);
     } catch (err) {
       alert(err);
     }
@@ -91,11 +85,9 @@ const WrapperToDo = () => {
     getTasks();
   };
 
-  const deleteUncheckTasks = async () => {
-    const filterPosts = posts.map((post) =>!post.done && http.delete(`/task/1/${post.uuid}`));
-
+  const deleteUncheckTasks = async (obj) => {
     try {
-      await Promise.all(filterPosts);
+      await http.post(`postTask/deleteUndone`,obj);
     } catch (err) {
       alert(err);
     }

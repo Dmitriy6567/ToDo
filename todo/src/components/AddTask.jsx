@@ -14,11 +14,12 @@ const AddTask = ({ posts, postTasks, getTasks,deleteCheckTasks, deleteUncheckTas
       name: task,
       done: false,
     };
-
     if (task.trim()) {
       postTasks(newPost).then(() => getTasks());
     }
+
     setTask("");
+    
   };
 
   const clearAll = () => {
