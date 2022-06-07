@@ -22,7 +22,7 @@ const WrapperToDo = () => {
       const count = response.data.countPage;
       setCountPage(Math.ceil(count/ 5));
     } catch (err) {
-      console.log('Ошибка гет запрсоа',err);
+      console.log(err)
     }
   };
 
@@ -30,7 +30,7 @@ const WrapperToDo = () => {
     try {
       await http.post("postTask/", obj);
     } catch (err) {
-      alert(err.response);
+      alert('Error '+ err.response.data.response.code + ' '+ err.response.data.response.message);
     }
   };
 
@@ -38,7 +38,7 @@ const WrapperToDo = () => {
     try {
       await http.patch(`postTask/${uuid}`, { name: newValue });
     } catch (err) {
-      alert(`Ошибка редактирования задачи: ${err}`);
+      alert('Error '+ err.response.data.response.code + ' '+ err.response.data.response.message);
     }
     getTasks()
   };
@@ -61,9 +61,6 @@ const WrapperToDo = () => {
     } catch (err) {
       alert(err);
     }
-
-    console.log(posts.length)
-    
   };
 
   const deleteAllTasks = async () => {
