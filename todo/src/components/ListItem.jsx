@@ -18,7 +18,6 @@ const ListItem = ({
 
   const toggleCheck = (e, uuid) => {
     patchCheckTask(e, uuid);
-    console.log(post.name, post.name.length)
   };
 
   const deletePosts = () => {
