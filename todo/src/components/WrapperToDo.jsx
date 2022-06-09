@@ -31,6 +31,7 @@ const WrapperToDo = () => {
       await http.post("postTask/", obj);
     } catch (err) {
       alert('Error '+ err.response.data.response.code + ' '+ err.response.data.response.message);
+      console.log(err)
     }
   };
 
