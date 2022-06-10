@@ -18,6 +18,7 @@ const WrapperToDo = () => {
       const response = await http.get(
         `postTask/?filter=${filter}&sort=${sort}&page=${page}&limit=${5}`
       );
+
       setPosts(response.data.result);
       const count = response.data.countPage;
       setCountPage(Math.ceil(count/ 5));
@@ -124,11 +125,12 @@ const WrapperToDo = () => {
         patchChangeTask={patchChangeTask}
         deleteTasks={deleteTasks}
       />
-      <Pagination
+      {posts.length && <Pagination
         page={page}
         setPage={setPage}
         countPage={countPage}
-      />
+      /> }
+      
     </div>
   );
 };

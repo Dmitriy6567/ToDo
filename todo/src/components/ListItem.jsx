@@ -25,8 +25,8 @@ const ListItem = ({
   };
 
   const editingTask = () => {
-    setInpEditing(post.name)
-    setEditing(false);
+      setInpEditing(post.name)
+      setEditing(false);
   };
 
   const saveTask=(e,uuid)=>{
