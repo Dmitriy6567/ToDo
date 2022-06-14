@@ -30,6 +30,7 @@ const WrapperToDo = () => {
   const postTasks = async (obj) => {
     try {
       await http.post("postTask/", obj);
+      posts.length%5===0 & sort==='old' ? setPage(countPage) : setPage(1)
     } catch (err) {
       alert('Error '+ err.response.data.response.code + ' '+ err.response.data.response.message);
       console.log(err)
@@ -65,28 +66,9 @@ const WrapperToDo = () => {
     }
   };
 
-  const deleteAllTasks = async () => {
+  const deleteAllTasks = async (del) => {
     try {
-      await http.post(`postTask/deleteAll`, []);
-    } catch (err) {
-      alert(err);
-    }
-    getTasks();
-  };
-
-  const deleteCheckTasks = async (obj) => {
-    try {
-      await http.post(`postTask/deleteDone`,obj);
-    } catch (err) {
-      alert(err);
-    }
-
-    getTasks();
-  };
-
-  const deleteUncheckTasks = async (obj) => {
-    try {
-      await http.post(`postTask/deleteUndone`,obj);
+      await http.delete(`postTask/?del=${del}`);
     } catch (err) {
       alert(err);
     }
@@ -115,17 +97,15 @@ const WrapperToDo = () => {
         postTasks={postTasks}
         getTasks={getTasks}
         deleteAllTasks={deleteAllTasks}
-        deleteCheckTasks={deleteCheckTasks}
-        deleteUncheckTasks={deleteUncheckTasks}
       />
-      <FilterTasks filter={filter} setFilter={setFilter} setSort={setSort} />
+      <FilterTasks posts={posts} filter={filter} setFilter={setFilter} sort={sort} setSort={setSort} />
       <PostList
         posts={posts}
         patchCheckTask={patchCheckTask}
         patchChangeTask={patchChangeTask}
         deleteTasks={deleteTasks}
       />
-      {posts.length && <Pagination
+      {posts.length>0 && <Pagination
         page={page}
         setPage={setPage}
         countPage={countPage}

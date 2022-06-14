@@ -1,10 +1,9 @@
 import "../styles/FilterTasks.css";
 import Button from "./Button";
-import Select from "./Select";
-const FilterTasks = ({ filter, setFilter, setSort}) => {
 
-  const DONE ="done"
-  const UNDONE ="undone"
+const FilterTasks = ({ posts, filter, setFilter, sort, setSort }) => {
+  const DONE = "done";
+  const UNDONE = "undone";
 
   return (
     <div className="filter__tasks">
@@ -17,20 +16,22 @@ const FilterTasks = ({ filter, setFilter, setSort}) => {
       />
       <Button
         body={DONE}
-        locked={filter === DONE}
+        locked={filter === DONE || posts.length === 0}
         callback={() => {
-          setFilter(DONE);        
+          setFilter(DONE);
         }}
       />
       <Button
         body={UNDONE}
-        locked={filter === UNDONE}
+        locked={filter === UNDONE || posts.length === 0}
         callback={() => {
           setFilter(UNDONE);
         }}
       />
-      <Select
-        callback={(e) => setSort(e.target.value)}
+      <Button
+        body={sort}
+        locked={posts.length < 2}
+        callback={() => setSort((prev) => (prev === "new" ? "old" : "new"))}
       />
     </div>
   );

@@ -8,7 +8,10 @@ const AddTask = ({ posts, postTasks, getTasks,deleteCheckTasks, deleteUncheckTas
   const [disableBtnAllTasks,setDisableBtnAllTasks] = useState(false)
   const [disableBtnDoneTasks,setDisableBtnDoneTasks] = useState(false)
   const [disableBtnUndoneTasks,setDisableBtnUndoneTasks] = useState(false)
-
+  const ADD = 'Add';
+  const CLEAR_ALL = 'Clear all';
+  const CLEAR_DONE = 'Clear done';
+  const CLEAR_UNDONE = 'Clear undone';
   const addNewPost = () => {
     const newPost = {
       name: task,
@@ -23,15 +26,15 @@ const AddTask = ({ posts, postTasks, getTasks,deleteCheckTasks, deleteUncheckTas
   };
 
   const clearAll = () => {
-    deleteAllTasks();
+    deleteAllTasks(CLEAR_ALL);
   };
 
   const clearDone = () => {
-    deleteCheckTasks()
+    deleteAllTasks(CLEAR_DONE)
   };
 
   const clearUndone = () => {
-    deleteUncheckTasks()
+    deleteAllTasks(CLEAR_UNDONE)
   };
 
   const getValue = (e) => {
@@ -72,10 +75,10 @@ const AddTask = ({ posts, postTasks, getTasks,deleteCheckTasks, deleteUncheckTas
         callback={getValue}
         addEnter={addEnter}
       />
-      <Button body={"Add"} callback={addNewPost}>Add</Button>
-      <Button body={"Clear All"} locked={disableBtnAllTasks} callback={clearAll} />
-      <Button body={"Clear done"} locked={disableBtnDoneTasks} callback={clearDone} />
-      <Button body={"Clear undone"} locked={disableBtnUndoneTasks} callback={clearUndone} />
+      <Button body={ADD} callback={addNewPost}>Add</Button>
+      <Button body={CLEAR_ALL} locked={disableBtnAllTasks} callback={clearAll} />
+      <Button body={CLEAR_DONE} locked={disableBtnDoneTasks} callback={clearDone} />
+      <Button body={CLEAR_UNDONE} locked={disableBtnUndoneTasks} callback={clearUndone} />
     </div>
   );
 };

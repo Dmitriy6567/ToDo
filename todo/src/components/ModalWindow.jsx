@@ -14,10 +14,10 @@ const ModalWindow = ({
   visible && rootClasses.push("active");
 
   const saveTask = (uuid) => {
-    if(modalValue.length){
-      post.name=modalValue;
-      setVisible(false);
-      patchChangeTask(modalValue, uuid);
+    if(modalValue.length || modalValue.match(/^[ ]+$/)){
+        post.name=modalValue;
+        setVisible(false);
+        patchChangeTask(modalValue, uuid);
     }
   };
 
