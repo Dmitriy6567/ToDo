@@ -15,25 +15,34 @@ const WrapperToDo = () => {
 
   const getTasks = async () => {
     try {
+      const sortValue = sort === "old" ? "ASC" : "DESC";
       const response = await http.get(
-        `postTask/?filter=${filter}&sort=${sort}&page=${page}&limit=${5}`
+        `postTask/?filter=${filter}&sort=${sortValue}&page=${page}&limit=${5}`
       );
 
-      setPosts(response.data.result);
+      setPosts(response.data.task);
       const count = response.data.countPage;
-      setCountPage(Math.ceil(count/ 5));
+      setCountPage(Math.ceil(count / 5));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   const postTasks = async (obj) => {
     try {
       await http.post("postTask/", obj);
-      posts.length%5===0 & sort==='old' ? setPage(countPage) : setPage(1)
+      (posts.length % 5 === 0) & (sort === "old")
+        ? setPage(countPage)
+        : setPage(1);
     } catch (err) {
-      alert('Error '+ err.response.data.response.code + ' '+ err.response.data.response.message);
       console.log(err)
+      alert(
+        "Error " +
+          err.response.data.response.code +
+          " " +
+          err.response.data.response.message
+      );
+      console.log(err);
     }
   };
 
@@ -41,20 +50,25 @@ const WrapperToDo = () => {
     try {
       await http.patch(`postTask/${uuid}`, { name: newValue });
     } catch (err) {
-      alert('Error '+ err.response.data.response.code + ' '+ err.response.data.response.message);
+      alert(
+        "Error " +
+          err.response.data.response.code +
+          " " +
+          err.response.data.response.message
+      );
     }
-    getTasks()
+    getTasks();
   };
 
   const patchCheckTask = async (e, uuid) => {
     try {
       await http.patch(`postTask/${uuid}`, {
-        done: e.target.checked
+        done: e.target.checked,
       });
     } catch (err) {
       alert(err);
     }
-    getTasks()
+    getTasks();
   };
 
   const deleteTasks = async (obj, uuid) => {
@@ -98,19 +112,22 @@ const WrapperToDo = () => {
         getTasks={getTasks}
         deleteAllTasks={deleteAllTasks}
       />
-      <FilterTasks posts={posts} filter={filter} setFilter={setFilter} sort={sort} setSort={setSort} />
+      <FilterTasks
+        posts={posts}
+        filter={filter}
+        setFilter={setFilter}
+        sort={sort}
+        setSort={setSort}
+      />
       <PostList
         posts={posts}
         patchCheckTask={patchCheckTask}
         patchChangeTask={patchChangeTask}
         deleteTasks={deleteTasks}
       />
-      {posts.length>0 && <Pagination
-        page={page}
-        setPage={setPage}
-        countPage={countPage}
-      /> }
-      
+      {posts.length > 0 && (
+        <Pagination page={page} setPage={setPage} countPage={countPage} />
+      )}
     </div>
   );
 };

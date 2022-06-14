@@ -3,6 +3,7 @@ import Button from "./Button";
 import Input from "./Input";
 import "../styles/PostItem.css";
 import ModalWindow from "./ModalWindow";
+import Btn from 'antd/es/button';
 
 const ListItem = ({
   post,
@@ -83,7 +84,7 @@ const ListItem = ({
         />
       )}
       <span className="date">{post.createdAt.substring(0,10)}</span>
-      <Button body={"Delete"} callback={deletePosts} />
+      <Btn onClick={deletePosts}>Delete</Btn>
     </li>
   );
 };
